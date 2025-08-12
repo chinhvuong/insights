@@ -120,14 +120,15 @@ const multicall = new ethers.Contract(multicallAddress, multicallAbi, provider);
 ```mermaid
 flowchart TD
     A[Developer calls aggregate3] --> B{Mode?}
-    B -->|Read (eth_call)| C[Node executes off-chain]
+    B -->|Read: eth_call| C[Node executes off-chain]
     C --> D[Return results to client]
-    B -->|Write (eth_sendTransaction)| E[Transaction sent to mempool]
+    B -->|Write: eth_sendTransaction| E[Transaction sent to mempool]
     E --> F[Validators execute multicall contract]
     F --> G[Loop over calls, execute target calls]
     G --> H[Gas fee charged for all execution]
-    B -->|callStatic (on write fn)| I[Node simulates write fn locally]
+    B -->|callStatic on write fn| I[Node simulates write fn locally]
     I --> D
+
 ```
 
 ---
